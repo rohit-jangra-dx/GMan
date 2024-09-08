@@ -5,11 +5,6 @@ import (
 	"fmt"
 )
 
-type Point struct {
-	X int
-	Y int
-	D configs.Direction
-}
 
 type Turn string
 
@@ -24,12 +19,17 @@ type Gman struct {
 	gameConfig configs.GameConfig
 }
 
-func CreateGman(Origin Point, Power int, gameConfig configs.GameConfig) Gman {
+func CreateGman(x int, y int, d string, Power int, gameConfig configs.GameConfig) (Gman, error) {
+	origin, err := createPoint(x, y, d)
+	if err != nil {
+		fmt.Println(err.Error())
+		return Gman{}, fmt.Errorf("gman could not be created successfully")
+	}
 	return Gman{
-		Origin:     Origin,
+		Origin:     origin,
 		Power:      Power,
 		gameConfig: gameConfig,
-	}
+	}, nil
 }
 
 func (g *Gman) Turn(direction Turn) {

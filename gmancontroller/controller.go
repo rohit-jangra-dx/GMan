@@ -1,9 +1,10 @@
 package gmancontroller
 
 import (
-	"Gman/gman"
+	"Gman/gman"	
 	"fmt"
 )
+
 
 type Controller struct {
 	gman *gman.Gman
