@@ -51,22 +51,18 @@ func (g *Gman) Turn(direction Turn) {
 // logic for moving in current direction
 func (g *Gman) moveNorth(steps int) {
 	g.Origin.Y += steps
-	fmt.Printf("Moved North by %d steps. new Origin are %d-%d\n", steps, g.Origin.X, g.Origin.Y)
 }
 
 func (g *Gman) moveSouth(steps int) {
 	g.Origin.Y -= steps
-	fmt.Printf("Moved North by %d steps. new Origin are %d-%d\n", steps, g.Origin.X, g.Origin.Y)
 }
 
 func (g *Gman) moveEast(steps int) {
 	g.Origin.X += steps
-	fmt.Printf("Moved North by %d steps. new Origin are %d-%d\n", steps, g.Origin.X, g.Origin.Y)
 }
 
 func (g *Gman) moveWest(steps int) {
 	g.Origin.X -= steps
-	fmt.Printf("Moved North by %d steps. new Origin are %d-%d\n", steps, g.Origin.X, g.Origin.Y)
 }
 
 func (g *Gman) getMoveMap() map[configs.Direction]func(int) {
@@ -90,5 +86,4 @@ func (g *Gman) Move(steps int) {
 	moveFunc(steps)
 
 	g.Power -= (steps * g.gameConfig.CostPerMove)
-	fmt.Printf("Remaining Power: %d\n", g.Power)
 }

@@ -1,4 +1,4 @@
-package io
+package parsers
 
 import (
 	"Gman/configs"
