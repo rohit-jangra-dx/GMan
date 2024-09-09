@@ -6,8 +6,9 @@ import (
 	"os"
 )
 
+const argsLength = 2
 func main() {
-	if len(os.Args) < 2 {
+	if len(os.Args) < argsLength {
 		fmt.Println("Usage: go run main.go <filename>")
 		return 
 	}

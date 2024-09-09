@@ -57,7 +57,7 @@ func (p *Point)GetNormalizedDifference(other Point) Point {
 		dx = 0
 	}
 	if dy != 0 {
-		dy = dy / int(math.Abs(float64(dx)))
+		dy = dy / int(math.Abs(float64(dy)))
 	} else {
 		dy = 0
 	}
