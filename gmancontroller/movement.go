@@ -1,14 +1,16 @@
 package gmancontroller
 
 import (
-	"Gman/configs"
 	"Gman/gman"
+	"Gman/grid"
+	"math"
 )
 
 // method to turn the gman
-func turnGman(g *gman.Gman, direction configs.Direction) {
-	currentDirection := g.Origin.D
-	diff := abs(int(direction)-int(currentDirection))
+func turnGman(g *gman.Gman, direction grid.Direction) {
+	currentDirection := g.Direction
+	
+	diff := int(math.Abs(float64((int(direction) - int(currentDirection)))))
 
 	switch {
 	case diff == 2:
@@ -17,7 +19,7 @@ func turnGman(g *gman.Gman, direction configs.Direction) {
 	
 	case direction > currentDirection:
 
-		if currentDirection == configs.North {
+		if currentDirection == grid.North {
 			g.Turn(gman.Left)
 		} else {
 			g.Turn(gman.Right)
@@ -25,7 +27,7 @@ func turnGman(g *gman.Gman, direction configs.Direction) {
 	
 	case direction < currentDirection:
 
-		if direction == configs.North {
+		if direction == grid.North {
 			g.Turn(gman.Right)
 		} else {
 			g.Turn(gman.Left)
@@ -35,14 +37,14 @@ func turnGman(g *gman.Gman, direction configs.Direction) {
 }
 
 // it would calculate the steps need to take in particular direction
-func deduceSteps(origin gman.Point, x int, y int) int {
-	if origin.D == configs.East || origin.D == configs.West {
-		return abs(origin.X - x)
+func deduceSteps(origin grid.Point, originDirection grid.Direction, destination grid.Point) int {
+	if originDirection == grid.East || originDirection == grid.West {
+		return int(math.Abs(float64(origin.X - destination.X)))
 	}
-	return abs(origin.Y - y)
+	return int(math.Abs(float64(origin.Y - destination.Y)))
 }
 
-func moveGman(g *gman.Gman, x int, y int) {
-	steps := deduceSteps(g.Origin, x, y)
+func moveGman(g *gman.Gman, destination grid.Point) {
+	steps := deduceSteps(g.Origin,g.Direction, destination)
 	g.Move(steps)
 }

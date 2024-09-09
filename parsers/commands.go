@@ -4,6 +4,7 @@ import (
 	"Gman/configs"
 	"Gman/gman"
 	"Gman/gmancontroller"
+	"Gman/grid"
 	"fmt"
 	"strconv"
 	"strings"
@@ -20,61 +21,52 @@ func CreateCommandContext() CommandContext {
 		controller: nil,
 	}
 }
+
 // command handlers
 func (c *CommandContext) handleSourceCommand(args []string) error {
 	if len(args) != 3 {
 		return fmt.Errorf("invalid number of arguments for SOURCE command")
 	}
-	coordinatesStr, direction := args[:2], args[2]
-	// converting them to int first
-	coordinatesInt, err := convertStringToInt(coordinatesStr)
+
+	x, y, d := args[0], args[1], args[2]
+
+	//converting args into valid point
+	origin, err := grid.CreatePoint(x, y)
+	if err != nil {
+		return err
+	}
+	direction, err := grid.CreateDirection(d)
 	if err != nil {
 		return err
 	}
 
-	// checking whether coordinates are valid or not
-	flag := configs.IsCoordinatesValid(coordinatesInt[0], coordinatesInt[1])
-	if !flag {
-		return fmt.Errorf("wrong coordinates are given according to grid")
-	}
-
-	g, err := gman.CreateGman(coordinatesInt[0], coordinatesInt[1], direction, 200, configs.GameConfigInstance)
-	if err != nil {
-		return err
-	}
+	g := gman.CreateGman(origin, direction, configs.GameConfigInstance)
 	c.gman = &g
 	return nil
 }
 
-func (c *CommandContext) handleDestinationCommand(args []string) error{
+func (c *CommandContext) handleDestinationCommand(args []string) error {
 	if len(args) != 2 {
 		return fmt.Errorf("invalid number of arguments for DESTINATION command")
 	}
 
-	coordinatesStr := args
+	x, y := args[0], args[1]
 
-	// converting them to int
-	coordinatesInt, err := convertStringToInt(coordinatesStr)
+	destination, err := grid.CreatePoint(x, y)
 	if err != nil {
 		return err
 	}
-	
-	// checking for coordinates validity
-	flag := configs.IsCoordinatesValid(coordinatesInt[0],coordinatesInt[1])
-	if !flag {
-		return fmt.Errorf("wrong coordinated are given according to grid")
-	}
-	// now creating controller to move gman to target location
+
 	ctrl := gmancontroller.CreateController(c.gman)
 	c.controller = &ctrl
 
 	// moving it
-	c.controller.MoveGmanToDestination(coordinatesInt[0],coordinatesInt[1])
+	c.controller.MoveGmanToDestination(destination)
 	return nil
 }
 
 func (c *CommandContext) handlePrintPowerCommand() error {
-	fmt.Printf("POWER  %d",c.gman.Power)
+	fmt.Printf("POWER  %d", c.gman.Power)
 	return nil
 }
 
@@ -95,7 +87,7 @@ func (c *CommandContext) ExecuteCommand(input string) error {
 	case "PRINT_POWER":
 		c.handlePrintPowerCommand()
 	default:
-		return fmt.Errorf("invalid command found")	
+		return fmt.Errorf("invalid command found")
 	}
 	return nil
 }

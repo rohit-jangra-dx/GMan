@@ -3,6 +3,7 @@ package grid
 import (
 	"Gman/configs"
 	"fmt"
+	"math"
 	"strconv"
 )
 
@@ -43,4 +44,22 @@ func IsCoordinatesValid(x int, y int, gridSize int)bool {
 		return false
 	}
 	return true
+}
+
+// gives possible values (0, 1 , -1) used for mapping out the relative direction between two points
+func (p *Point)GetNormalizedDifference(other Point) Point {
+	dx := p.X - other.X
+	dy := p.Y - other.Y
+
+	if dx != 0 {
+		dx = dx / int(math.Abs(float64(dx)))
+	} else {
+		dx = 0
+	}
+	if dy != 0 {
+		dy = dy / int(math.Abs(float64(dx)))
+	} else {
+		dy = 0
+	}
+	return Point{dx, dy}
 }

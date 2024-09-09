@@ -21,12 +21,12 @@ type Gman struct {
 	gameConfig 	configs.GameConfig
 }
 
-func CreateGman(p grid.Point, d grid.Direction, Power int, gameConfig configs.GameConfig) Gman {
+func CreateGman(p grid.Point, d grid.Direction, gameConfig configs.GameConfig) Gman {
 
 	return Gman{
 		Origin:     p,
 		Direction:  d,
-		Power:      Power,
+		Power:      gameConfig.InitialPower,
 		gameConfig: gameConfig,
 	}
 }
@@ -34,8 +34,8 @@ func CreateGman(p grid.Point, d grid.Direction, Power int, gameConfig configs.Ga
 func (g *Gman) Turn(direction Turn) {
 
 	turn_increment := map[Turn]int{
-		"Left":  -1,
-		"Right": 1,
+		Left:  -1,
+		Right: 1,
 	}
 
 	increment, exists := turn_increment[direction]

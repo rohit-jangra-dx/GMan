@@ -1,7 +1,8 @@
 package gmancontroller
 
 import (
-	"Gman/gman"	
+	"Gman/gman"
+	"Gman/grid"
 	"fmt"
 )
 
@@ -17,8 +18,9 @@ func CreateController(g *gman.Gman) Controller {
 	}
 }
 
-func (c *Controller) MoveGmanToDestination(x int, y int) int {
-	directionList, err := findDirectionsOfDestination(c.gman.Origin, x, y)
+func (c *Controller) MoveGmanToDestination(destination grid.Point) int {
+
+	directionList, err := findDirectionsOfDestination(c.gman.Origin,c.gman.Direction, destination)
 
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -27,7 +29,7 @@ func (c *Controller) MoveGmanToDestination(x int, y int) int {
 
 	for _, turn := range directionList {
 		turnGman(c.gman, turn)
-		moveGman(c.gman, x, y)
+		moveGman(c.gman, destination)
 	}
 	return c.gman.Power
 }
