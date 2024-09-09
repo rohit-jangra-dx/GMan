@@ -2,6 +2,7 @@ package gman
 
 import (
 	"Gman/configs"
+	"Gman/grid"
 	"fmt"
 )
 
@@ -14,22 +15,20 @@ const (
 )
 
 type Gman struct {
-	Origin     Point
-	Power      int
-	gameConfig configs.GameConfig
+	Origin     	grid.Point
+	Direction 	grid.Direction
+	Power      	int
+	gameConfig 	configs.GameConfig
 }
 
-func CreateGman(x int, y int, d string, Power int, gameConfig configs.GameConfig) (Gman, error) {
-	origin, err := createPoint(x, y, d)
-	if err != nil {
-		fmt.Println(err.Error())
-		return Gman{}, fmt.Errorf("gman could not be created successfully")
-	}
+func CreateGman(p grid.Point, d grid.Direction, Power int, gameConfig configs.GameConfig) Gman {
+
 	return Gman{
-		Origin:     origin,
+		Origin:     p,
+		Direction:  d,
 		Power:      Power,
 		gameConfig: gameConfig,
-	}, nil
+	}
 }
 
 func (g *Gman) Turn(direction Turn) {
@@ -44,7 +43,7 @@ func (g *Gman) Turn(direction Turn) {
 		fmt.Println("Invalid turn direction argument passed!")
 	}
 
-	g.Origin.D.Rotate(increment)
+	g.Direction.Rotate(increment)
 	g.Power -= g.gameConfig.CostPerTurn
 }
 
@@ -65,19 +64,19 @@ func (g *Gman) moveWest(steps int) {
 	g.Origin.X -= steps
 }
 
-func (g *Gman) getMoveMap() map[configs.Direction]func(int) {
-	return map[configs.Direction]func(int){
-		configs.North: g.moveNorth,
-		configs.East:  g.moveEast,
-		configs.South: g.moveSouth,
-		configs.West:  g.moveWest,
+func (g *Gman) getMoveMap() map[grid.Direction]func(int) {
+	return map[grid.Direction]func(int){
+		grid.North: g.moveNorth,
+		grid.East:  g.moveEast,
+		grid.South: g.moveSouth,
+		grid.West:  g.moveWest,
 	}
 }
 
 func (g *Gman) Move(steps int) {
 	moveMap := g.getMoveMap()
 
-	moveFunc, exists := moveMap[g.Origin.D]
+	moveFunc, exists := moveMap[g.Direction]
 	if !exists {
 		fmt.Println("Invalid direction!")
 		return

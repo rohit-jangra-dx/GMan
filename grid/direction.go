@@ -1,4 +1,4 @@
-package configs
+package grid
 
 import "fmt"
 
@@ -12,6 +12,23 @@ const (
 )
 
 const DirectionLen = 4
+
+// takes args as string and returns a valid direction
+func CreateDirection(arg string) (Direction, error){
+	
+	switch arg {
+	case "E":
+		return East, nil
+	case "W":
+		return West, nil
+	case "N":
+		return North, nil
+	case "S":
+		return South, nil
+	default:
+		return 0, fmt.Errorf("wrong direction argument given")
+	}
+}
 
 // takes -1 or 1 to rotate direction clockwise or counterclockwise
 func (d *Direction) Rotate(turn int) {
