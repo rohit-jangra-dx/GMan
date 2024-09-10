@@ -14,8 +14,8 @@ const (
 const DirectionLen = 4
 
 // takes args as string and returns a valid direction
-func CreateDirection(arg string) (Direction, error){
-	
+func CreateDirection(arg string) (Direction, error) {
+
 	switch arg {
 	case "E":
 		return East, nil
@@ -32,25 +32,12 @@ func CreateDirection(arg string) (Direction, error){
 
 // takes -1 or 1 to rotate direction clockwise or counterclockwise
 func (d *Direction) Rotate(turn int) {
-	newDirectionValue := 0
 	if turn > 1 || turn < -1 {
 		fmt.Println("wrong argument passed, either 1 or -1 would be applicable")
+		return
 	}
-	switch {
-	case turn < 0:
-		if *d == North {
-			newDirectionValue = 3
-		} else {
-			newDirectionValue = int(*d) + turn
-		}
 
-	case turn > 0:
-		if *d == West {
-			newDirectionValue = 0
-		} else {
-			newDirectionValue = int(*d) + turn
-		}
-	}
+	newDirectionValue := (int(*d) + turn + DirectionLen) % DirectionLen
 
 	*d = Direction(newDirectionValue)
 }

@@ -19,7 +19,6 @@ func CreateCommandContext() CommandContext {
 	}
 }
 
-
 func (c *CommandContext) ExecuteCommand(input string) error {
 	parts := strings.Fields(input)
 	if len(parts) == 0 {
@@ -41,4 +40,3 @@ func (c *CommandContext) ExecuteCommand(input string) error {
 	}
 	return nil
 }
-

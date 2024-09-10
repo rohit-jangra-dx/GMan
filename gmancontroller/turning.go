@@ -29,8 +29,8 @@ func getTurnMap() map[grid.Point]DirectionList {
 }
 
 // returns the list of direction you need to turn in order to reach to destination (optimized)
-func findDirectionsOfDestination(origin grid.Point, originDirection grid.Direction, destination grid.Point ) (DirectionList, error) {
-	
+func findDirectionsOfDestination(origin grid.Point, originDirection grid.Direction, destination grid.Point) (DirectionList, error) {
+
 	// used for the mapping
 	directionalDiff := destination.GetNormalizedDifference(origin)
 

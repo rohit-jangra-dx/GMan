@@ -6,7 +6,6 @@ import (
 	"fmt"
 )
 
-
 type Turn string
 
 const (
@@ -15,10 +14,10 @@ const (
 )
 
 type Gman struct {
-	Origin     	grid.Point
-	Direction 	grid.Direction
-	Power      	int
-	gameConfig 	configs.GameConfig
+	Origin     grid.Point
+	Direction  grid.Direction
+	Power      int
+	gameConfig configs.GameConfig
 }
 
 func CreateGman(p grid.Point, d grid.Direction, gameConfig configs.GameConfig) Gman {
@@ -76,12 +75,7 @@ func (g *Gman) getMoveMap() map[grid.Direction]func(int) {
 func (g *Gman) Move(steps int) {
 	moveMap := g.getMoveMap()
 
-	moveFunc, exists := moveMap[g.Direction]
-	if !exists {
-		fmt.Println("Invalid direction!")
-		return
-	}
-
+	moveFunc := moveMap[g.Direction]
 	moveFunc(steps)
 
 	g.Power -= (steps * g.gameConfig.CostPerMove)

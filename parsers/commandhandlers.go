@@ -1,15 +1,15 @@
 package parsers
 
 import (
-	"fmt"
-	"Gman/grid"
 	"Gman/configs"
 	"Gman/gman"
 	"Gman/gmancontroller"
+	"Gman/grid"
+	"fmt"
 )
 
 const (
-	ArgsLengthForSourceCommand = 3
+	ArgsLengthForSourceCommand      = 3
 	ArgsLengthForDestinationCommand = 2
 )
 

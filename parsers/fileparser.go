@@ -6,20 +6,19 @@ import (
 	"os"
 )
 
-
 type FileParser struct {
-	filePath string
+	filePath       string
 	commandContext *CommandContext
 }
 
 func CreateFileParser(filePath string, commandContext *CommandContext) FileParser {
 	return FileParser{
-		filePath: filePath,
+		filePath:       filePath,
 		commandContext: commandContext,
 	}
 }
 
-func (f *FileParser) ParseFile() error{
+func (f *FileParser) ParseFile() error {
 
 	file, err := os.Open(f.filePath)
 	if err != nil {
@@ -32,7 +31,7 @@ func (f *FileParser) ParseFile() error{
 	for scanner.Scan() {
 		commandStr := scanner.Text()
 		err = f.commandContext.ExecuteCommand(commandStr)
-		if err != nil{
+		if err != nil {
 			return err
 		}
 	}

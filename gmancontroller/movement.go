@@ -9,14 +9,14 @@ import (
 // method to turn the gman
 func turnGman(g *gman.Gman, direction grid.Direction) {
 	currentDirection := g.Direction
-	
+
 	diff := int(math.Abs(float64((int(direction) - int(currentDirection)))))
 
 	switch {
 	case diff == 2:
 		g.Turn(gman.Left)
 		g.Turn(gman.Left)
-	
+
 	case direction > currentDirection:
 
 		if currentDirection == grid.North {
@@ -24,7 +24,7 @@ func turnGman(g *gman.Gman, direction grid.Direction) {
 		} else {
 			g.Turn(gman.Right)
 		}
-	
+
 	case direction < currentDirection:
 
 		if direction == grid.North {
@@ -45,6 +45,6 @@ func deduceSteps(origin grid.Point, originDirection grid.Direction, destination 
 }
 
 func moveGman(g *gman.Gman, destination grid.Point) {
-	steps := deduceSteps(g.Origin,g.Direction, destination)
+	steps := deduceSteps(g.Origin, g.Direction, destination)
 	g.Move(steps)
 }

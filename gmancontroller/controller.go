@@ -6,7 +6,6 @@ import (
 	"fmt"
 )
 
-
 type Controller struct {
 	gman *gman.Gman
 }
@@ -20,7 +19,7 @@ func CreateController(g *gman.Gman) Controller {
 
 func (c *Controller) MoveGmanToDestination(destination grid.Point) int {
 
-	directionList, err := findDirectionsOfDestination(c.gman.Origin,c.gman.Direction, destination)
+	directionList, err := findDirectionsOfDestination(c.gman.Origin, c.gman.Direction, destination)
 
 	if err != nil {
 		fmt.Printf("%s", err)
